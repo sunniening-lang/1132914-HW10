@@ -173,6 +173,34 @@ function hasAnyValidMove(player) {
   return false;
 }
 
+function clearHints() {
+  for (var r = 0; r < 8; r++) {
+    for (var c = 0; c < 8; c++) {
+      var cell = cells[r][c];
+      var dot = cell.querySelector(".hint-dot");
+      if (dot) dot.remove();
+    }
+  }
+}
+
+function showHintsFor(player) {
+  clearHints();
+
+  // 遊戲結束就不顯示
+  if (currentPlayer === "done") return;
+
+  for (var r = 0; r < 8; r++) {
+    for (var c = 0; c < 8; c++) {
+      if (validMove(r, c, player).length > 0) {
+        var dot = document.createElement("div");
+        dot.className = "hint-dot " + (player === "black" ? "hint-black" : "hint-white");
+        cells[r][c].appendChild(dot);
+      }
+    }
+  }
+}
+
+
 // ===== 更新狀態文字 =====
 function updateStatusText() {
   var turnEl = document.getElementById("turnText");
@@ -183,6 +211,14 @@ function updateStatusText() {
 
   if (currentPlayer === "black") turnEl.textContent = "輪到：黑棋（你）";
   else if (currentPlayer === "white") turnEl.textContent = "輪到：白棋（電腦）";
+    
+      // ✅ 更新可下提示
+  if (currentPlayer === "black" || currentPlayer === "white") {
+    showHintsFor(currentPlayer);
+  } else {
+    clearHints();
+  }
+
 }
 
 // ===== 結束判斷（兩邊都不能下） =====
@@ -308,3 +344,5 @@ function computerMove() {
 function resetGame() {
   initBoard();
 }
+
+
