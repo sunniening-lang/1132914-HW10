@@ -126,6 +126,32 @@ button:hover, select:hover {
   animation: flipDisc 0.36s ease-in-out;
 }
 
+/* ===== 可下位置提示點 ===== */
+.cell {
+  position: relative; /* 讓提示點可以定位在格子中間 */
+}
+
+.hint-dot {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  opacity: 0.75;
+  pointer-events: none; /* 不擋住點擊 */
+  box-shadow: 0 0 0 2px rgba(0,0,0,0.25);
+}
+
+/* 輪到黑：顯示暗色提示 */
+.hint-black {
+  background: rgba(0, 0, 0, 0.55);
+}
+
+/* 輪到白：顯示亮色提示 */
+.hint-white {
+  background: rgba(255, 255, 255, 0.65);
+}
+
+
 @keyframes flipDisc {
   0%   { transform: rotateY(0deg) scale(1); }
   50%  { transform: rotateY(90deg) scale(1.08); }
